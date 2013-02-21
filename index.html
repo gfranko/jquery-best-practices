@@ -1,0 +1,516 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>jQuery Best Practices</title>
+
+		<meta name="description" content="A framework for easily creating beautiful presentations using HTML">
+		<meta name="author" content="Hakim El Hattab">
+		<meta name="author" content="Asa Baylus">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+
+		<link type="text/css" rel="stylesheet" href="http://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" />
+		<link rel="stylesheet" href="css/reveal.min.css" />
+		<link rel="stylesheet" id="theme" href="css/theme/beige.css" />
+
+		<!-- For syntax highlighting -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+		<style type="text/css">
+			pre { box-shadow: 0 0 !important; }
+			code { box-shadow: 0 0 6px rgba(0, 0, 0, .3);  }
+		</style>
+
+		<!-- If the query includes 'print-pdf', use the PDF print sheet -->
+		<script>
+			document.write( '<link rel="stylesheet" href="css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+		</script>
+
+		<style>
+			.elgreg-slides img {
+				max-width: 50%;
+			}
+		</style>
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+				<section>
+					<section>
+						<h1>
+							<br />jQuery Best Practices
+						</h1>
+						<p>Greg Franko</p>
+					</section>
+					<section>
+						<h2>About the Speaker</h2>
+						<div>
+							<ul>
+								<li>JavaScript Engineer at AddThis (We are hiring)</li>
+								<li>Open Source Enthusiast</li>
+								<li>Soon-to-be Author</li>
+								<li>Hates the word HTML5</li>
+							</ul>
+							<div style="text-align: left;">
+								<br />
+							</div>
+						</div>
+						<h3>Contact Details</h3>
+						<div>
+							<ul>
+								<li><strong>Github</strong>: https://github.com/gfranko</li>
+								<li><strong>Twitter</strong>: https://twitter.com/GregFranko</li>
+								<li><strong>LinkedIn</strong>: http://linkedin.com/in/gregfranko</li>
+								<li><strong>Stackoverflow</strong>: http://stackoverflow.com/users/1172750/greg-franko</li>
+							</ul>
+						</div>
+					</section>
+				</section>
+				<section>
+					<h2>
+						Why do people use jQuery?<br />
+					</h2>
+					<ul>
+						<li><strong>The DOM sucks without it</strong></li>
+						<li><strong>Ajax and JSONP suck without it</strong></li>
+						<li><strong>jQuery Utility functions are rad</strong></li>
+						<li><strong>jQuery Deferreds/Promises are really rad</strong></li>
+					</ul>
+				</section>
+				<section>
+					<h2>What other projects use jQuery?</h2>
+					<ul>
+						<li><strong>Backbone.js</strong></li>
+						<li><strong>Twitter Bootstrap</strong></li>
+						<li><strong>jQueryUI</strong></li>
+						<li><strong>jQuery Mobile</strong></li>
+						<li><strong>Millions of jQuery and jQueryUI Plugins</strong></li>
+					</ul>
+				</section>
+				<section>
+					<h1>Are You Using jQuery?</h1>
+
+					<h5>It's okay if you aren't</h5>
+				</section>
+
+				<section>
+					<h1>jQuery Ready Event</h1>
+				</section>
+<section>
+					<h3>Most Projects start like this:</h3>
+					<pre>
+	<code>
+  $("document").ready(function() {
+    // The DOM is ready!
+    // The rest of the code goes here
+  });
+	</code>
+			        </pre>
+					<p>or use a shorter version...</p>
+					<pre>
+	<code>
+  $(function() {
+    // The DOM is ready!
+    // The rest of the code goes here
+  });
+	</code>
+			    </pre>
+				</section>
+				<section>
+					<h1>This is fine...</h1>
+					<br />
+					<ul>
+						<li>If you know the environments where your code will run</li>
+						<li>If you do not care about page load performance</li>
+						<li>If you don't care about best practices</li>
+					</ul>
+				</section>
+				<section>
+					<h2>This is better:</h2>
+
+					<pre>
+	<code>
+  // IIFE - Immediately Invoked Function Expression
+  (function($, window, document) {
+
+    // The $ is now locally scoped 
+
+   // Listen for the jQuery ready event on the document
+   $(function() {
+
+     // The DOM is ready!
+
+   });
+
+   // The rest of the code goes here!
+
+  }(window.jQuery, window, document));
+  // The global jQuery object is passed as a parameter
+	</code>
+			        </pre>
+<a href="http://jsbin.com/onahin/4/edit" target="_blank">jsbin example</a>
+				</section>
+				<section>
+					<h2>This is best:</h2>
+
+					<pre>
+	<code>
+  // IIFE - Immediately Invoked Function Expression
+  (function(yourcode) {
+
+    // The global jQuery object is passed as a parameter
+  	yourcode(window.jQuery, window, document);
+
+  }(function($, window, document) {
+
+    // The $ is now locally scoped 
+
+   // Listen for the jQuery ready event on the document
+   $(function() {
+
+     // The DOM is ready!
+
+   });
+
+   // The rest of the code goes here!
+
+  }
+  }));
+	</code>
+			        </pre>
+			        <a href="http://jsbin.com/aseyaz/4/edit" target="_blank">jsbin example</a>
+				</section>
+				<section>
+				<h1>DOM manipulation</h1>
+				</section>
+				<section>
+					<h3>Most Projects do this:</h3>
+					<pre>
+	<code>
+  // Set's an element's title attribute using it's current text
+  $(".container input#elem").attr("title", $(".container input#elem").text());
+
+  // Set's an element's text color to red
+  $(".container input#elem").css("color", "red");
+
+  // Makes the element fade out
+  $(".container input#elem").fadeOut();
+
+	</code>
+			        </pre>
+			</section>
+				<section>
+					<h1>This is fine...</h1>
+					<br />
+					<ul>
+						<li>If you like repeating yourself</li>
+						<li>If you do not care about performance</li>
+						<li>If you don't care about best practices</li>
+					</ul>
+				</section>
+					<section>
+					<h2>This is better:</h2>
+
+					<pre>
+	<code>
+  // Set's an element's title attribute using it's current text
+  $("#elem").attr("title", $("#elem").text());
+
+  // Set's an element's text color to red
+  $("#elem").css("color", "red");
+
+  // Makes the element fade out
+  $("#elem").fadeOut();
+	</code>
+			        </pre>
+			        <h3>Simplify your selectors</h3>
+					</section>
+					<section>
+					<h2>This is best:</h2>
+
+					<pre>
+	<code>
+  // Stores the live DOM element inside of a variable
+  var elem = $("#elem");
+
+  // Set's an element's title attribute using it's current text
+  elem.attr("title", elem.text());
+
+  // Set's an element's text color to red
+  elem.css("color", "red");
+
+  // Makes the element fade out
+  elem.fadeOut();
+	</code>
+			        </pre>
+			        <h3>Cache your selectors in variables</h3>
+			      </section>
+			    <section>	
+					<p>or use a shorter version...</p>
+					<pre>
+	<code>
+  // Stores the live DOM element inside of a variable
+  var elem = $("#elem");
+
+  // Chaining
+  elem.attr("title", elem.text()).css("color", "red").fadeOut();
+
+	</code>
+			    </pre>
+			    <h3>Chaining</h3>
+					</section>
+<section>
+	<h1>Another DOM Example</h1>
+</section>
+				<section>
+					<h3>Most Projects do this:</h3>
+					<pre>
+	<code>
+  // Dynamically building an unordered list from an array
+  var localArr = ["Greg", "Peter", "Kyle", "Danny", "Mark"],
+  	list = $("ul.people");
+
+  $.each(localArr, function(index, value) {
+
+    list.append("&lt;li id=" + index + "&gt;" + value + "&lt;/li>");
+
+  });
+
+	</code>
+			        </pre>
+			</section>
+				<section>
+					<h1>This is fine...</h1>
+					<br />
+					<ul>
+						<li>If you like repeatedly appending elements to the DOM</li>
+						<li>If you like slow web apps</li>
+						<li>If you don't care about best practices</li>
+					</ul>
+				</section>
+					<section>
+					<h2>This is best:</h2>
+
+					<pre>
+	<code>
+  // Dynamically building an unordered list from an array
+  var localArr = ["Greg", "Peter", "Kyle", "Danny", "Mark"],
+  	list = $("ul.people"),
+  	dynamicItems = "";
+
+  $.each(localArr, function(index, value) {
+
+    dynamicItems += "&lt;li id=" + index + "&gt;" + value + "&lt;/li>";
+
+  });
+
+  list.append(dynamicItems);
+	</code>
+			        </pre>
+			        <h3>Append once</h3>
+					</section>
+					
+					<section>
+	<h1>Event Handling</h1>
+					</section>
+<section>
+					<h3>Most Projects do this:</h3>
+					<pre>
+	<code>
+
+  $("#longlist li").on("mouseenter", function() {
+
+    $(this).text("Click me!");
+
+  });
+
+  $("#longlist li").on("click", function() {
+
+    $(this).text("Why did you click me?!");
+
+  });
+
+	</code>
+			        </pre>
+			</section>
+				<section>
+					<h1>This is fine...</h1>
+					<br />
+					<ul>
+						<li>If you like using a lot of memory for event handlers</li>
+						<li>If you don't have many DOM elements</li>
+						<li>If you don't care about best practices</li>
+					</ul>
+				</section>
+					<section>
+					<h2>This is better:</h2>
+
+					<pre>
+	<code>
+  var listItems = $("#longlist li");
+  listItems.on({
+
+    "mouseenter": function() {
+
+      $(this).text("Click me!");
+
+    },
+
+    "click": function() {
+
+      $(this).text("Why did you click me?!");
+
+    }
+
+  });
+	</code>
+			        </pre>
+			        <h3>DRY (Don't Repeat Yourself)</h3>
+					</section>
+					<section>
+					<h2>This is best:</h2>
+
+					<pre>
+	<code>
+  var list = $("#longlist");
+
+  list.on("mouseenter", "li", function(){
+
+    $(this).text("Click me!");
+
+  });
+
+  list.on("click", "li", function() {
+
+    $(this).text("Why did you click me?!");
+
+  });
+	</code>
+			        </pre>
+			        <h3>Event Delegation</h3>
+			      </section>
+
+					<section>
+	<h1>AJAX</h1>
+					</section>
+<section>
+					<h3>Most Projects do this:</h3>
+					<pre>
+	<code>
+  function getName(personid) {
+    var dynamicData = {};
+    dynamicData["id"] = personID;
+    $.ajax({
+      url: "getName.php",
+      type: "get",
+      data: dynamicData,
+      success: function(data) {
+        // Updates the UI based the ajax result
+        $(".person-name").text(data.name);  
+      }
+    });
+  }
+
+  getName("2342342");
+
+	</code>
+			        </pre>
+			</section>
+				<section>
+					<h1>This is fine...</h1>
+					<br />
+					<ul>
+						<li>If you like inflexible code</li>
+						<li>If you don't have to worry about multiple ajax requests</li>
+						<li>If you don't care about best practices</li>
+					</ul>
+				</section>
+					<section>
+					<h2>This is best:</h2>
+
+					<pre>
+	<code>
+  function getName(personid) {
+    var dynamicData = {};
+    dynamicData["id"] = personID;
+    return $.ajax({
+      url: "getName.php",
+      type: "get",
+      data: dynamicData
+    });
+  }
+
+  getName("2342342").done(function(data) {
+    // Updates the UI based the ajax result
+    $(".person-name").text(data.name); 
+  });
+	</code>
+			        </pre>
+			        <h3>Uses Promises, Very Flexible</h3>
+					</section>
+<section>
+	<h1>What are you interested In?</h1>
+</section>
+<section>
+	<h1>Possible Topics</h1>
+					<ul>
+						<li>jQuery and CSS</li>
+						<li>jQuery Custom Events - Pub/Sub</li>
+						<li>jQuery and Object Literals</li>
+						<li>jQuery Utility Functions</li>
+						<li>jQuery Event Namespaces</li>
+						<li>The future of jQuery</li>
+						<li>jQuery Event Namespaces</li>
+						<li>Authoring jQuery Plugins</li>
+						<li>Return False vs Event.preventDefault()</li>
+						<li>Animation with Promises</li>
+					</ul>
+</section>
+			</div>
+
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.min.js"></script>
+
+		<script>
+
+			// Full list of configuration options available here:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+				transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/none
+
+				// Optional libraries used to extend on reveal.js
+				dependencies: [
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/markdown/showdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+					{ src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+					// { src: 'plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } }
+				]
+			});
+
+		</script>
+
+	</body>
+</html>

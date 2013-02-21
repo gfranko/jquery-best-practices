@@ -1,0 +1,71 @@
+body {
+    padding: 0 12px;
+    background-color: rgb(80,80,80);
+    position: 
+}
+h1 { 
+    color: rgb(255,255,255); 
+}
+ul { 
+    padding: 0; 
+    border: 1px dotted rgb(120,120,120); 
+    display: inline-block; 
+    margin: 0;
+    width: 464px;
+}
+li { 
+    list-style-type: none ; 
+    text-align: center;
+    width:100px; 
+    height:130px;
+    background:url("character_sprites.png") top left no-repeat; 
+    margin: 4px;
+    float: left;
+    background-color: rgb(230,230,230);
+    border: 4px solid rgb(40,40,40);
+    position: relative;
+}
+
+li > span {
+    color: #FFF;
+    text-shadow:1px 2px #000;
+    background-color: rgba(60,60,60,1);
+    display: block;
+    position: absolute;
+    bottom: 0px;
+    width: 100%;
+    min-height: 32px;
+    font-size: 90%;
+    padding: 6px 0 0 0;
+    line-height: .85;
+}
+
+/******************/
+/*    CSS DEMO    */
+/******************/
+li {
+    display: block;
+}
+
+li.selected { 
+    border:  4px solid #c1403d;
+}
+
+li.games.green { 
+    border:  4px solid #5c8f09;
+}
+li.games.zoom {
+    zoom:1.25;
+}
+li.hidden {
+    display:none;
+}
+
+
+/******************/
+/*   Sprite Map   */
+/******************/
+li { background:url("character_sprites.png") top left no-repeat; }
+#item-3{ background-position:-2px -512px; }
+#item-2{ background-position:-2px -614px; }
+#item-1{ background-position:-2px -716px; }

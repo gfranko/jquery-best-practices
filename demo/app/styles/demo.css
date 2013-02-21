@@ -1,0 +1,113 @@
+body {
+    padding: 0 12px;
+    background-color: rgb(80,80,80);
+}
+h1 { 
+    color: rgb(255,255,255); 
+}
+ul { 
+    padding: 0; 
+    border: 1px dotted rgb(120,120,120); 
+    display: inline-block; 
+    margin: 0
+}
+li { 
+    list-style-type: none ; 
+    text-align: center;
+    width:100px; 
+    height:130px;
+    background:url("character_sprites.png") top left no-repeat; 
+    margin: 4px;
+    float: left;
+    background-color: rgb(230,230,230);
+    border: 4px solid rgb(40,40,40);
+    position: relative;
+}
+
+li.selected { 
+    border:  4px solid #c1403d;
+}
+
+li > span {
+    color: #FFF;
+    text-shadow:1px 2px #000;
+    background-color: rgba(60,60,60,1);
+    display: block;
+    position: absolute;
+    bottom: 0px;
+    width: 100%;
+    min-height: 32px;
+    font-size: 90%;
+    padding: 6px 0 0 0;
+    line-height: .85;
+}
+
+/******************/
+/* Animation & FX */
+/* For CSS3 Animation details see: http://goo.gl/sgG7Y */
+/******************/
+li {
+    display: none;
+}
+li.starwars {
+    opacity: 0;
+    -webkit-animation: starwars 200ms ease-out both;
+    -webkit-transform-origin: 50% 50%;
+}
+
+@-webkit-keyframes starwars {
+    0% { -webkit-transform: perspective(200px) scale(3) translateY(180px) rotateX(80deg); }
+    80% { -webkit-transform: perspective(200px) scale(1) rotateX(60deg) }
+    100% { -webkit-transform: perspective(200px) scale(1) rotateX(0deg) }
+}
+
+li.unselected {
+    -webkit-animation-name: starwars, partial_fadein;
+}
+
+@-webkit-keyframes partial_fadein {
+    0% { opacity: 0; }
+    80% { opacity: .2; }
+    100% { opacity: .2;  }
+}
+
+li.selected {
+    -webkit-animation-name: starwars, fadein;
+}
+
+@-webkit-keyframes fadein {
+    0% { opacity: 0;  }
+    80% { opacity: 1;  }
+    100% { opacity: 1;  }
+}
+/*#item-1 { -webkit-animation-delay: 100ms !important; }
+#item-2 { -webkit-animation-delay: 300ms !important; }
+#item-3 { -webkit-animation-delay: 500ms !important; }
+#item-4 { -webkit-animation-delay: 700ms !important; }
+#item-5 { -webkit-animation-delay: 900ms !important; }
+#item-6 { -webkit-animation-delay: 1100ms !important; }
+#item-7 { -webkit-animation-delay: 1300ms !important; }
+#item-8 { -webkit-animation-delay: 1500ms !important; }
+#item-9 { -webkit-animation-delay: 1700ms !important; }
+#item-10 { -webkit-animation-delay: 1900ms !important; }
+#item-11 { -webkit-animation-delay: 2100ms !important; }
+#item-12 { -webkit-animation-delay: 2300ms !important; }
+#item-13 { -webkit-animation-delay: 2500ms !important; }*/
+
+/******************/
+/*   Sprite Map   */
+/******************/
+li { background:url("character_sprites.png") top left no-repeat; }
+#item-13{ background-position:-2px -2px; }
+#item-12{ background-position:-2px -104px; }
+#item-11{ background-position:-2px -206px; }
+#item-10{ background-position:-2px -818px; }
+#item-9{ background-position:-2px -920px; }
+#item-8{ background-position:-2px -1022px; }
+#item-7{ background-position:-2px -1124px; }
+#item-6{ background-position:-2px -1226px; }
+#item-5{ background-position:-2px -308px; }
+#item-4{ background-position:-2px -410px; }
+#item-3{ background-position:-2px -512px; }
+#item-2{ background-position:-2px -614px; }
+#item-1{ background-position:-2px -716px; }

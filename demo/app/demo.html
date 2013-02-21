@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+        <title>jQuery - Back to the Basics - Part 2</title>
+        <meta name="description" content=""/>
+        <meta name="viewport" content="width=device-width"/>
+        <link rel="stylesheet" href="styles/main.css"/>
+        <link rel="stylesheet" href="styles/jquerycss.css">
+
+        <!-- build:js scripts/utils.js -->
+        <script src="scripts/vendor/modernizr.min.js"></script>
+        <!-- endbuild -->
+    </head>
+    <body>
+    <div class="container">
+        <article>
+            <ul>
+                <li id="item-1" class="games">
+                    <span>Lara Croft</span>
+                </li>
+                <li id="item-2" class="games">
+                    <span>Master Chief</span>
+                </li>
+                <li id="item-3" class="cartoons">
+                    <span>Doc McStuffins</span>
+                </li>
+                <li id="item-4" class="tv hidden">
+                    <span>Joan</span>
+                </li>
+            </ul>
+        </article>
+    </div>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="scripts/vendor/jquery.min.js"><\/script>')</script>
+    <script>
+
+/***********************/
+/* Single CSS Value    */
+/***********************/
+// $("#item-1").css("border", "2px dotted orange");
+
+
+
+
+
+/***********************/
+/* Multiple CSS Values */
+/***********************/
+// $("#item-2").css({
+//     'position'    : 'absolute',
+//     'borderColor' : 'yellow',   // <-- use camelCase
+//     'top'         : '50px',
+//     'left'        : function(){ 
+//         var windowWidth = $(window).width(),
+//             elementWidth = $(this).outerWidth();
+//         return (windowWidth/2) - (elementWidth/2);
+//     }
+// });    
+
+
+
+
+/**********************/
+/* Add / Remove Class */
+/**********************/   
+// $("#item-2").addClass("green"); // add a class
+
+
+
+// $("#item-2").addClass("green zoom"); // multiple classes
+
+
+
+// $("#item-2").removeClass(function(){
+//     return $(this).prev().attr('class'); // --> 'games'
+// });
+
+
+
+//$('li').removeClass();
+
+
+
+
+
+/**********************/
+/* Effects            */
+/**********************/
+// $("#item-1").hide();
+
+
+// $("#item-4").show('slow');
+
+
+// $("#item-4").toggle('slow');
+// setInterval(function(){
+//     $("#item-4").toggle('slow');
+// }, 2000);
+
+
+// $("#item-4").fadeIn(500); // uses milliseconds
+
+
+// $("#item-4").fadeTo(500, .35); // 35% fadeIn
+
+
+//$("#item-4").slideDown(500);
+
+
+
+/***************************/
+/* Stop()                  */
+/***************************/
+
+
+/* Without Stop === BAD!   */
+/***************************/
+// $("ul").hover(function(){
+//         $("#item-3").slideDown();
+//     }, function(){
+//         $("#item-3").slideUp();
+//     });
+
+
+/* With Stop === Better    */
+/***************************/
+// $("ul").hover(function(){
+//         $("#item-3").slideDown();
+//     }, function(){
+//         $("#item-3").stop().slideUp();
+//     });
+
+
+
+
+/***********************/
+/* Chaining            */
+/***********************/
+// $("#item-4").fadeIn(2000).delay(1000).slideUp();
+
+
+
+
+/***********************/
+/* Animate             */
+/***********************/
+// $("#item-2").css({
+//     'position'    : 'relative',
+//     'borderColor' : 'yellow',   // <-- use camelCase
+//     'top'         : 'auto',
+//     'z-index'     : '1'
+// }); 
+// $("#item-2")
+//     .animate({
+//         'left' : '200px'
+//         }, 2000, 'swing')
+//     .animate({
+//         'left' : '+=200px' // <-- move relative
+//         }, 2000, 'swing'); 
+
+
+
+
+/***************************/
+/* CSS3 w jQuery Fallback  */
+/***************************/
+// $("#item-4").css({'opacity' : '0', 'display' : 'block',});
+// setTimeout(function(){
+//     if (Modernizr.csstransitions){
+//         // CSS3 
+//         $('#item-4').css({
+//             '-transition' : 'opacity 3s',
+//             'opacity' : '1'
+//         });
+//     } else {
+//         // jQuery fallback
+//         $('#item-4').fadeIn(3000);
+//     }
+// }, 10)
+
+
+
+    </script>
+    </body>
+</html>
