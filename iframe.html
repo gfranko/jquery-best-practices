@@ -52,7 +52,9 @@ var url = window.location.href,
     iframe_config = _ate.util.rfromKV(_duc(vars['atc']||""));
     iframe_share.url = _duc(iframe_share.url||"");
 setAttributes(weibo_like_button, vars);
-_ate.ajs('//tjs.sjs.sinajs.cn/open/api/js/wb.js', 1);
+setTimeout(function() {
+	_ate.ajs('//tjs.sjs.sinajs.cn/open/api/js/wb.js', 1);
+}, 1000);
 if (document.addEventListener)weibo_like_button.addEventListener('click', clickTracker(iframe_share,iframe_config), false);
 else if (document.attachEvent)weibo_like_button.attachEvent('onclick', clickTracker(iframe_share,iframe_config));
 
