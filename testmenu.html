@@ -10,6 +10,19 @@
     addthis_config.services_include = 'facebook, twitter';
     addthis_config.services_exclude = 'twitter,thefancy,linkedin,print,stumbleupon,gmail,amazon,netvibes,favorites,adfty,google,delicious,tumblr,amazon,hotmail,hyves';
   </script>
+<!--必填-->
+<meta property="og:type" content="video" />
+<meta property="og:url" content="视频的URL地址，请勿携带统计代码，分页网址请统一填写第一页链接" />
+<meta property="og:title" content="视频的显示名称，不建议携带网站名称等SEO信息" />
+<meta property="og:description" content="视频的文字描述，将直接显示在微博里，建议完整填写，不要重复填写标题" />
+<!--选填-->
+<meta property="og:image" content="视频的显示图片" />
+<meta name="weibo:video:embed_code" content="视频播放的HTML嵌入代码" />
+<meta name="weibo:video:stream" content="视频流的链接源" />
+<meta name="weibo:video:duration" content="视频播放的时长，秒" />
+<meta name="weibo:video:create_at" content="视频的创建时间" />
+<meta name="weibo:video:update_at" content="视频的更新时间" />
+        
 </head>
 <body>
 <!--
@@ -292,7 +305,7 @@ addthis.toolbox("#toolbox");
           <a class="addthis_button_pinterest_pinit" pi:pinit:url="http://www.apple.com" pi:pinit:media="http://images.apple.com/home/images/hero.jpg" pi:pinit:layout="horizontal"></a>
           <a class="addthis_button_google_plusone"></a>
           <a class="addthis_button_foursquare"></a>
-          <a class="addthis_button_sinaweibo_like" wb:like:style="text" wb:like:type="webpage" wb:like:url="http://gregfranko.com" wb:like:title="Really bro?" wb:like:description="Greg Franko Rules!"></a>
+          <a class="addthis_button_sinaweibo_like"></a>
           <a class="addthis_counter addthis_pill_style"></a>
       </div>
 
