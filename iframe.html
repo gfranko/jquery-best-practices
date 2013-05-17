@@ -1,3 +1,61 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"><head><title>AddThis Pinterest PinIt button</title><link rel="stylesheet" type="text/css" href="sinaweibo.css"/></head><body id="b" style="background-color:transparent">
 <wb:like id="weibo_like"></wb:like><script type="text/javascript">/* <![CDATA[ */addthis_conf={xcs:1,xtr:1};/* ]]> */</script><script type="text/javascript" src="http://cache-local.addthis.com/cachefly/js/300/addthis_widget.js#async=1"></script><script type="text/javascript">/* <![CDATA[ */
 addthis.addEventListener('addthis-internal.ready', function() {
+/* vim: set expandtab tabstop=4 shiftwidth=4: */
+function clickTracker(ishare,iconfig) {
+    return function(e) {
+        addthis_share = _ate.util.clone(ishare);
+        addthis_config = _ate.util.clone(iconfig);
+        addthis_url = addthis_share.url;
+        _ate.usu(addthis_url, 1); // prevent rescanning
+        _ate.share.track('sinaweibo_like',0,addthis_share,addthis_config);
+        return false;
+    };
+}
+
+function setAttributes(elem, defaults) {
+    var currentProp,
+        prop,
+        meta;
+    for (var prop in defaults) { 
+        if (defaults.hasOwnProperty(prop)) {
+            currentProp = defaults[prop];
+            if(currentProp) {
+                if(prop === 'style' && currentProp !== 'full') {
+                    elem.setAttribute('type', currentProp);
+                }
+                else if(prop === 'color' || prop === 'language') {
+                    elem.setAttribute(prop, currentProp);
+                }
+                else if(prop === 'atc' || prop === 'ats') {
+                }
+                else if(prop === 'type' || prop === 'url' || prop === 'title' || prop === 'description' || prop === 'image') {
+                    meta = document.createElement('meta');
+                    meta.setAttribute('property', 'og:' + prop);
+                    meta.setAttribute('content', currentProp);
+                    document.getElementsByTagName('head')[0].appendChild(meta);                    
+                }
+                else {
+                    meta = document.createElement('meta');
+                    meta.setAttribute('name', 'weibo:' + prop);
+                    meta.setAttribute('content', currentProp);
+                    document.getElementsByTagName('head')[0].appendChild(meta);
+                }
+            }
+        }
+    }
+}
+var url = window.location.href,
+    vars = _ate.util.ghp(url),
+    weibo_like_button = document.getElementById('weibo_like'),
+    iframe_share = _ate.util.rfromKV(_duc(vars['ats']||"")),
+    iframe_config = _ate.util.rfromKV(_duc(vars['atc']||""));
+    iframe_share.url = _duc(iframe_share.url||"");
+setAttributes(weibo_like_button, vars);
+_ate.ajs('//tjs.sjs.sinajs.cn/open/api/js/wb.js', 1);
+if (document.addEventListener)weibo_like_button.addEventListener('click', clickTracker(iframe_share,iframe_config), false);
+else if (document.attachEvent)weibo_like_button.attachEvent('onclick', clickTracker(iframe_share,iframe_config));
+
+});
+</script>
+</script></script></body></html>
